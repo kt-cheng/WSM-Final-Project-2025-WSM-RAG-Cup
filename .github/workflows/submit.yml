@@ -1,0 +1,20 @@
+name: Submit
+# Controls when the workflow will run
+on:
+  push:
+    branches: [ "main" ]
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Submit code
+        run: |
+          curl -X POST "https://towel.cs.nccu.edu.tw/wsm/submit/submit" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "repo_url": "${{ github.server_url }}/${{ github.repository }}.git",
+              "token": "${{ secrets.WSM_SUBMIT_TOKEN }}"
+            }'
